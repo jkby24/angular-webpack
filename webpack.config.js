@@ -89,9 +89,9 @@ if (isProd) {
     }));
 }
 
-// if (!isProd) {
-//     config.devtool = 'eval-source-map';
-// }
+if (!isProd) {
+    config.devtool = 'eval-source-map';
+}
 
 
 if (isDev) {
