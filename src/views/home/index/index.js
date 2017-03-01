@@ -1,16 +1,14 @@
 /**
  * ES6 Module
  */
-// import bc from '../../../themes/blue-zh_CN/images/dili.png';
 import './index.html';
-export default angular.module('app').controller('homeIndexController',
-    function ($scope, $stateParams, $timeout) {
-        $scope.a = 'index@home：HMR!';
-        // $scope.imgDir = '/themes/blue-zh_CN/pic/';
-        // $scope.imgName = $stateParams.imgName ? $stateParams.imgName : '3.jpg';
-        // $timeout(() => {
-        //     $scope.src = bc;//$scope.imgDir + $scope.imgName;
-        // }, 3000);
+import '../../../components/directive/app-list/app-loading.js';
+import '../../../components/filter/common-filter.js';
+import '../../../components/service/common-service.js';
+export default $app.controller('homeIndexController',
+    function ($scope, $stateParams, $timeout,commonService) {
+        $scope.a = commonService.getMegTest();
+        console.log('123');
 
     }
 );

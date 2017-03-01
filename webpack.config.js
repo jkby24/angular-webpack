@@ -3,9 +3,8 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 // var ngAnnotateWebpackPlugin = require('ng-annotate-webpack-plugin');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require('path');
 var fs = require('fs');
 var pkg = JSON.parse(fs.readFileSync('package.json'));
@@ -14,8 +13,7 @@ var config = {};
 
 var ENV = process.env.npm_lifecycle_event;
 var isDev = ENV === 'dev';
-var isTest = ENV === 'test';
-var isProd = ENV === 'bulid';
+var isProd = ENV === 'build';
 
 /**
  * 修改pom文件中的源码路径
@@ -29,96 +27,53 @@ function modifyPom() {
 }
 
 var dist = path.join(__dirname, '/dist');
-if (isProd) {
-    dist = path.join(dist, pkg.version);
-    // modifyPom();
-}
-/**
-   * Entry
-   * Reference: http://webpack.github.io/docs/configuration.html#entry
-   * Should be an empty object if it's generating a test build
-   * Karma will set this when it's a test build
-   */
+// if (isProd) {
+//     dist = path.join(dist, pkg.version);
+//     // modifyPom();
+// }
 config.entry = {
-    app: './src/app.js'
+    app: './src/app.js',
+    vendor : ['angular','angular-ui-router', 'oclazyload']
 };
 
-/**
-   * Output
-   * Reference: http://webpack.github.io/docs/configuration.html#output
-   * Should be an empty object if it's generating a test build
-   * Karma will handle setting it up for you when it's a test build
-   */
 config.output = {
     path: dist,
-    filename: '[name].js',
-    chunkFilename: 'chunk-[name].js'
+    filename: '[name]-[hash:8].js',
+    chunkFilename: 'chunk-[hash:8]-[name].js'
 };
 
-config.resolve = {
-    extentions: ['', 'js']//当requrie的模块找不到时，添加这些后缀
-};
 config.module = {
     loaders: [
         {
-            // JS LOADER
-            // Reference: https://github.com/babel/babel-loader
-            // Transpile .js files using babel-loader
-            // Compiles ES6 and ES7 into ES5 code
             test: /\.js$/,
-            loader: 'ng-annotate!babel',
-            exclude: /node_modules/
+            loader: 'ng-annotate!babel'
         },
-        // {
-        //     // TS LOADER
-        //     // Transpile .ts files using ts-loader
-        //     // Compiles TS into ES5 code
-        //     test: /\.ts$/,
-        //     loader: 'ng-annotate!ts',
-        //     exclude: /node_modules/
-        // },
+        { test: /\.css$/, loader: ExtractTextPlugin.extract("style", "css")},
+
         {
             test: /\.html$/,
             loader: 'raw'
         },
-        // {
-        //     test: /\.html$/,
-        //     loader: 'html'
-        // },
-        // {
-        //     test: /\.scss$/,
-        //     loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
-        // },
         {
             test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-            loader: 'url?limit=5000'
-        },
-        // {
-        //     test: /\.jpg$/,
-        //     loader: 'file-loader'
-        // }
+            loader: 'url?limit=1024&name=css/images/[hash:8].[name].[ext]'
+        }
     ]
 };
-
 config.plugins = [];
 config.plugins.push(
     new webpack.ProvidePlugin({
         $: 'jquery'
     })
+    , new ExtractTextPlugin('css/main.[hash:8].css')
     , new HtmlWebpackPlugin({
         filename: 'index.html',
         template: './src/index.html',
         inject: 'body'
     })
-    // , new ngAnnotateWebpackPlugin() // 和ng-annotate-loader功能一样。也一样会在多次引用angular的时候不正常
-    // , new webpack.optimize.DedupePlugin()
-    // , new webpack.optimize.CommonsChunkPlugin(
-    //     {
-    //         name: 'app',
-    //         chunks: ['core', 'tool']
-    //     }
-    // )
-    // , new webpack.NoErrorsPlugin()
+    ,new webpack.optimize.CommonsChunkPlugin({
+      		names: ['vendor']
+      	})
     // , new CopyWebpackPlugin([{
     //     from: './src/themes',
     //     to: path.join(dist, 'themes')
@@ -134,19 +89,9 @@ if (isProd) {
     }));
 }
 
-
-/**
- * Devtool
- * Reference: http://webpack.github.io/docs/configuration.html#devtool
- * Type of sourcemap to use per build type
- */
-if (isTest) {
-    config.devtool = 'inline-source-map';
-} else if (isProd) {
-    config.devtool = 'source-map';
-} else {
-    // config.devtool = 'eval-source-map';
-}
+// if (!isProd) {
+//     config.devtool = 'eval-source-map';
+// }
 
 
 if (isDev) {
@@ -155,7 +100,6 @@ if (isDev) {
     config.devServer = {
         port: 8889,
         outputPath: dist,
-        // contentBase: './dist',
         inline: true,
         hot: true,
         open: 'http://localhost:8889/#!/home/index'
