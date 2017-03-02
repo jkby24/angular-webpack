@@ -1,0 +1,10 @@
+
+<div>登录页</div>
+<uc-login-form main-page="{{mainPage}}" org-name="{{orgName}}" num-identify-code="3"
+               ng-show="ucLoginFormModel.showLoginView">
+  <div class="home">
+      用户名：<input type="text" name="login_name" ng-model="ucLoginFormModel.loginData.login_name">
+      密码：<input type="text" name="password" ng-model="ucLoginFormModel.loginData.password">
+      <div ng-click="login()">登录</div>
+  </div>
+</uc-login-form>

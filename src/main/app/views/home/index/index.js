@@ -9,9 +9,9 @@ import 'common-service';
 export default $app.controller('homeIndexController',
     function ($scope, $stateParams, $timeout,commonService,apiService) {
         $scope.a = commonService.getMegTest();
-        // apiService.getHttpTest().then(function(data){
-        //   console.log(data);
-        // });
+        apiService.getHttpTest().then(function(data){
+          console.log(data);
+        });
         // console.log('123');
 
     }

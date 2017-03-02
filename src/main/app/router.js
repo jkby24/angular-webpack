@@ -97,6 +97,28 @@ export default angular.module('app-router', [
                 return defer.promise;
             }
         }
-    });
+    })
+    .state('home.login', {
+        url: '/login',
+        templateProvider: function ($q) {
+            return $q((resolve) => {
+                require.ensure([], function () {
+                    resolve(require('./views/home/login/login.html'));
+                });
+            });
+        },
+        controller: 'homeLoginController',
+        resolve: {
+            _jsLoad: function ($q, $ocLazyLoad) {
+                var defer = $q.defer();
+                require.ensure([], function () {
+                    let module = require('./views/home/login/login.js');
+                    $ocLazyLoad.load({ name: module.name || module.default.name });
+                    defer.resolve();
+                });
+                return defer.promise;
+            }
+        }
+    });;
 
 });

@@ -3,6 +3,7 @@ import oclazyload from 'oclazyload';
 import router from './router.js';
 import config from './config.js';
 import './theme/css/style.css';
+import ucComponent from 'uc-component';
 export default window.$app = angular.module('app', [
     router.name,
     oclazyload
@@ -54,65 +55,7 @@ export default window.$app = angular.module('app', [
                 }
                 url = config.api_host + url;
             }
-            return httpUrlFormat(url, params);
-        };
-
-
-        //url编码
-       var encodeUriQuery = function (val, pctEncodeSpaces) {
-           if (val == undefined) {
-               return '';
-           }
-           return encodeURIComponent(val).
-           replace(/%40/gi, '@').
-           replace(/%3A/gi, ':').
-           replace(/%24/g, '$').
-           replace(/%2C/gi, ',').
-           replace(/%3B/gi, ';').
-           replace(/%2F/gi, '/').
-           replace(/%20/g, pctEncodeSpaces ? '%20' : '+').
-           replace(/'/g, escape('\''));
-       };
-        //todo 这里是从uc-component组件中拷贝出
-        var httpUrlFormat = function (url, params) {
-            if (params) {
-                var urlArray = [];
-
-                if ($.isArray(params)) {
-                    params = params.length > 0 ? params[0] : [];
-                }
-                $.each(params, function (key, value) {
-                    if ($.isArray(value)) {
-                        var arrayValueCell = [];
-                        $.each(value, function (keyCell, valueCell) {
-                            arrayValueCell.push(key + '=' + encodeUriQuery(valueCell));
-                        });
-                        if (arrayValueCell.length > 0) {
-                            urlArray.push(arrayValueCell.join('&'));
-                        }
-                    } else if (value != undefined) {
-                        if (url.indexOf(':' + key) !== -1) {
-                            url = url.replace(':' + key, encodeUriQuery(value));
-                        } else {
-                            urlArray.push(key + '=' + encodeUriQuery(value));
-                        }
-                    }
-                });
-                // Sort by key, keep the same url as angular, or 401(Unauthorization) may occur due to Mac签名错误
-                urlArray.sort();//先直接进行排序兼容一下微信端下面描述的问题，其实后面的a.localeCompare(b)通过本地化进行字符串目前项目中没有必要，但避免出现问题，先留着。
-                urlArray.sort(function (a, b) {
-                    //todo 安卓版微信如果默认为QQ浏览器X5内核的调用localeCompare会报 illegal access错误。不支持该方法。这个先做一下try catch处理
-                    try{
-                        return a.localeCompare(b);
-                    }catch (err){
-                        return 0;
-                    }
-                });
-                url = encodeURI(url) + (urlArray.length > 0 ? (url.indexOf('?') !== -1 ? '&' : '?') + urlArray.join('&') : '');
-            } else {
-                url = encodeURI(url);
-            }
-            return url;
+            return ucComponent.HttpUrlFormat(url, params);
         };
 
         /**
