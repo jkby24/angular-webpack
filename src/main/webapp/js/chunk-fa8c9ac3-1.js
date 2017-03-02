@@ -1,1 +1,0 @@
-webpackJsonp([1],{6:function(i,n){i.exports="<div>home页面内容</div>\r\n<div>{{a}}</div>\r\n\r\n<div ui-view></div>\r\n"}});

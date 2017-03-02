@@ -10,7 +10,7 @@ var fs = require('fs');
 var pkg = JSON.parse(fs.readFileSync('package.json'));
 var CleanPlugin = require('clean-webpack-plugin');
 var config = {};
-
+var aliasPath = require('./src/main/app/alias.config.js');
 var ENV = process.env.npm_lifecycle_event;
 var isDev = ENV === 'dev';
 var isProd = ENV === 'build';
@@ -57,7 +57,7 @@ config.module = {
         },
         {
             test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-            loader: 'url?limit=1024&name=css/images/[hash:8].[name].[ext]'
+            loader: 'url?limit=1024&name=images/[hash:8].[name].[ext]'
         }
     ]
 };
@@ -66,7 +66,7 @@ config.plugins.push(
     new webpack.ProvidePlugin({
         $: 'jquery'
     })
-    , new ExtractTextPlugin('css/main.[hash:8].css')
+    , new ExtractTextPlugin('main.[hash:8].css')
     , new HtmlWebpackPlugin({
         filename: 'index.html',
         template: path.join(codePath, '/index.html'),
@@ -112,6 +112,16 @@ if (isDev) {
         hot: true,
         open: 'http://localhost:8889/#!/home/index'
     };
+}
+
+if(aliasPath){//模块别名
+  for(var key in aliasPath){
+    aliasPath[key] = path.join(codePath, aliasPath[key]);
+  }
+  config.resolve= {
+          root: codePath,
+          alias: aliasPath
+      }
 }
 
 module.exports = config;

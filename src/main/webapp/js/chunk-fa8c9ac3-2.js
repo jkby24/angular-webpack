@@ -1,1 +1,0 @@
-webpackJsonp([2,1],{6:function(e,n){e.exports="<div>home页面内容</div>\r\n<div>{{a}}</div>\r\n\r\n<div ui-view></div>\r\n"},7:function(e,n,o){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),o(6),n.default=$app.controller("homeController",["$scope",function(e){e.a=1}])}});

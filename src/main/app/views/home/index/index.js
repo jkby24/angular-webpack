@@ -2,13 +2,17 @@
  * ES6 Module
  */
 import './index.html';
-import '../../../components/directive/app-list/app-loading.js';
-import '../../../components/filter/common-filter.js';
-import '../../../components/service/common-service.js';
+import 'app-loading';
+import 'common-filter';
+import 'common-service';
+// import '../../../components/service/api-service.js';
 export default $app.controller('homeIndexController',
-    function ($scope, $stateParams, $timeout,commonService) {
+    function ($scope, $stateParams, $timeout,commonService,apiService) {
         $scope.a = commonService.getMegTest();
-        console.log('123');
+        // apiService.getHttpTest().then(function(data){
+        //   console.log(data);
+        // });
+        // console.log('123');
 
     }
 );

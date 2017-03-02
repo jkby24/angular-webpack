@@ -1,1 +1,0 @@
-webpackJsonp([5],{14:function(i,d){i.exports='<div id="test">home index</div>\r\n<div class="home">\r\n    <div>{{a}}</div>\r\n</div>\r\n'}});

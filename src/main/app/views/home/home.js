@@ -1,5 +1,6 @@
 'use strict';
 import './home.html';
+import '../../components/service/api-service.js';//基础服务
 export default $app.controller('homeController', [
     '$scope',
     function ($scope) {

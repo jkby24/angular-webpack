@@ -1,3 +1,6 @@
+/**
+ * 公共过滤器
+ */
 export default $app
     .constant('PAGE_SIZE', 8)
     .filter('filterTest', [function() {
