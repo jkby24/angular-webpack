@@ -1,0 +1,1 @@
+webpackJsonp([6,5],{14:function(e,o){e.exports='<div id="test">home index</div>\r\n<div class="home">\r\n    <div>{{a}}</div>\r\n</div>\r\n'},15:function(e,o,n){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),n(14),o.default=angular.module("app").controller("homePage1Controller",["$scope","$stateParams","$timeout",function(e,o,n){e.a="index@home：HMR22!"}])}});

@@ -8,7 +8,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var path = require('path');
 var fs = require('fs');
 var pkg = JSON.parse(fs.readFileSync('package.json'));
-
+var CleanPlugin = require('clean-webpack-plugin');
 var config = {};
 
 var ENV = process.env.npm_lifecycle_event;
@@ -26,20 +26,21 @@ function modifyPom() {
     });
 }
 
-var dist = path.join(__dirname, '/dist');
+var dist = path.join(__dirname, '/src/main/webapp');
+var codePath = path.join(__dirname, '/src/main/app');
 // if (isProd) {
 //     dist = path.join(dist, pkg.version);
 //     // modifyPom();
 // }
 config.entry = {
-    app: './src/app.js',
+    app: path.join(codePath, '/app.js'),
     vendor : ['angular','angular-ui-router', 'oclazyload']
 };
 
 config.output = {
     path: dist,
-    filename: '[name]-[hash:8].js',
-    chunkFilename: 'chunk-[hash:8]-[name].js'
+    filename: 'js/[name]-[hash:8].js',
+    chunkFilename: 'js/chunk-[hash:8]-[name].js'
 };
 
 config.module = {
@@ -68,12 +69,19 @@ config.plugins.push(
     , new ExtractTextPlugin('css/main.[hash:8].css')
     , new HtmlWebpackPlugin({
         filename: 'index.html',
-        template: './src/index.html',
+        template: path.join(codePath, '/index.html'),
         inject: 'body'
     })
     ,new webpack.optimize.CommonsChunkPlugin({
       		names: ['vendor']
       	})
+    //清空输出目录
+    ,new CleanPlugin([dist], {
+         root:__dirname,
+         verbose: true,//将log写到 console.
+         dry: false,//true时不要删除任何东西
+         exclude: ['WEB-INF']
+     })
     // , new CopyWebpackPlugin([{
     //     from: './src/themes',
     //     to: path.join(dist, 'themes')
