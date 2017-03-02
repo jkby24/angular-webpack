@@ -37,7 +37,7 @@ export default angular.module('app-router', [
         templateProvider: ['$q', function ($q) {
             var defer = $q.defer();
             require.ensure([], function () {
-                defer.resolve(require('./views/home/home.html'));
+                defer.resolve(require('./views/home/index.html'));
             });
             return defer.promise;
         }],
@@ -46,7 +46,7 @@ export default angular.module('app-router', [
             _jsLoad: ['$q', '$ocLazyLoad', function ($q, $ocLazyLoad) {
                 var defer = $q.defer();
                 require.ensure([], function () {
-                    let module = require('./views/home/home.js');
+                    let module = require('./views/home/controller.js');
                     $ocLazyLoad.load({ name: module.name || module.default.name });
                     defer.resolve();
                 });
@@ -55,7 +55,7 @@ export default angular.module('app-router', [
         }
     })
     .state('home.index', {
-        url: '/index?imgName',
+        url: '/index',
         templateProvider: function ($q) {
             return $q((resolve) => {
                 require.ensure([], function () {
@@ -68,7 +68,7 @@ export default angular.module('app-router', [
             _jsLoad: function ($q, $ocLazyLoad) {
                 var defer = $q.defer();
                 require.ensure([], function () {
-                    let module = require('./views/home/index/index.js');
+                    let module = require('./views/home/index/controller.js');
                     $ocLazyLoad.load({ name: module.name || module.default.name });
                     defer.resolve();
                 });
@@ -76,21 +76,21 @@ export default angular.module('app-router', [
             }
         }
     })
-    .state('home.page1', {
-        url: '/page1',
+    .state('home.card', {
+        url: '/card',
         templateProvider: function ($q) {
             return $q((resolve) => {
                 require.ensure([], function () {
-                    resolve(require('./views/home/page1/page1.html'));
+                    resolve(require('./views/home/card/index.html'));
                 });
             });
         },
-        controller: 'homePage1Controller',
+        controller: 'homeCardController',
         resolve: {
             _jsLoad: function ($q, $ocLazyLoad) {
                 var defer = $q.defer();
                 require.ensure([], function () {
-                    let module = require('./views/home/page1/page1.js');
+                    let module = require('./views/home/card/controller.js');
                     $ocLazyLoad.load({ name: module.name || module.default.name });
                     defer.resolve();
                 });
@@ -98,21 +98,21 @@ export default angular.module('app-router', [
             }
         }
     })
-    .state('home.login', {
+    .state('login', {
         url: '/login',
         templateProvider: function ($q) {
             return $q((resolve) => {
                 require.ensure([], function () {
-                    resolve(require('./views/home/login/login.html'));
+                    resolve(require('./views/login/index.html'));
                 });
             });
         },
-        controller: 'homeLoginController',
+        controller: 'loginController',
         resolve: {
             _jsLoad: function ($q, $ocLazyLoad) {
                 var defer = $q.defer();
                 require.ensure([], function () {
-                    let module = require('./views/home/login/login.js');
+                    let module = require('./views/login/controller.js');
                     $ocLazyLoad.load({ name: module.name || module.default.name });
                     defer.resolve();
                 });

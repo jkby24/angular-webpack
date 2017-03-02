@@ -1,12 +1,11 @@
 /**
  * 登录页
  */
-import './login.html';
+import './index.html';
 import 'login-form';
-export default $app.controller('homeLoginController',
+export default $app.controller('loginController',
     function ($scope) {
         $scope.login = function(){
-          debugger
           return $scope.ucLoginFormSubmit()
                                 .then(function (userData) {
 
