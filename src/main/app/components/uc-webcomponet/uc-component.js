@@ -3,7 +3,9 @@
  */
 var ucComponentConfig = require('uc-component-config');
 window.ucComponentConfig = ucComponentConfig;
-var CryptoJS = require("crypto-js");
+// var CryptoJS = require("crypto-js");
+// window.CryptoJS = ucComponentConfig;
+var CryptoJS = require("./crypto/hmac-sha256.js");
 var ucComponent = {};
 ucComponent.DEBUG_MODE = false;
 ucComponent.KEY_LOG = 'fep_user_log';

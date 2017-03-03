@@ -7,6 +7,8 @@ code.google.com/p/crypto-js/wiki/License
 /**
  * Electronic Codebook block mode.
  */
+var CryptoJS = require("./tripledes.js");
+require("./mod_nd_md5.js");
 CryptoJS.mode.ECB = (function () {
     var ECB = CryptoJS.lib.BlockCipherMode.extend();
 
@@ -24,3 +26,4 @@ CryptoJS.mode.ECB = (function () {
 
     return ECB;
 }());
+module.exports = CryptoJS;

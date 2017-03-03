@@ -1,7 +1,7 @@
 /**
  * Created by libin on 2017/3/3.
  */
-import 'jquery-typeahead';
+// import 'jquery-typeahead';
 import './search-require.html';
 export default $app.directive('searchRequire',
     ['$timeout',function ($timeout) {
