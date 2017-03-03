@@ -1,12 +1,12 @@
 /**
  * Created by px on 2016/8/18 0018.
  */
+window.config = require('config');
 function UcComponentConfig() {
     this.uc_realm = "sdp.nd";  //调用uc接口获得个人信息领域信息
     this.cookieHour = 0;//cookie保存小时数,0表示会话级别
     //this.uc_url_front="http://101uccenter.dev.web.nd/v0.93/"
     //this.client_host="101uccenter.dev.web.nd";//调用uc接口post get delete patch put时配置的host专用
-
     this.uc_url_front = window.config && config.uc_host;
     this.client_host = "ucbetapi.101.com";
     this.virtual_organizations = "0";//1为虚拟组织登陆  0为普通登陆

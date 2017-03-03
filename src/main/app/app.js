@@ -1,7 +1,7 @@
 import angular from 'angular';
 import oclazyload from 'oclazyload';
 import router from './router.js';
-import config from './config.js';
+import config from 'config';
 import './theme/css/style.css';
 import ucComponent from 'uc-component';
 export default window.$app = angular.module('app', [

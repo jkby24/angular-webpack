@@ -3,6 +3,7 @@
  */
 import 'xss';
 import './constant.js';
+import ucComponent from 'uc-component';
 export default $app
         .filter('ucFilterEmailDomain', ['UC_EMAIL_DOMAIN_DATA', function (EmailDomainData) {
             return function (email) {
