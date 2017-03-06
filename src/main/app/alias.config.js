@@ -13,5 +13,8 @@ var aliasConfig = {
     'xss':'/components/uc-webcomponet/xss.js',
     'login-form':'/components/uc-webcomponet/$directive/login-form/login-form.js',
     'search-require':'/components/directive/search-require/search-require.js',
+    'permission-check':'/components/directive/permission-check/permission-check.js',
+    'userdata_util': '/components/service/userdata/userdata_util.js',
+    'userdata_angular': '/components/service/userdata/userdata_angular.js',
 }
 module.exports = aliasConfig;

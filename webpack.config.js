@@ -64,7 +64,9 @@ config.module = {
 config.plugins = [];
 config.plugins.push(
     new webpack.ProvidePlugin({
-        $: 'jquery'
+        '$': 'jquery',
+        'jQuery':'jquery',
+        'window.jQuery': 'jquery'
     })
     , new ExtractTextPlugin('main.[hash:8].css')
     , new HtmlWebpackPlugin({

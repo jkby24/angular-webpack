@@ -5,5 +5,12 @@
     <div ng-bind="a|filterTest"></div>
     <app-loading></app-loading>
     <div class="image-test"></div>
+    <div>
+        <div permission callback="reply()">这是有权限控制的按钮</div>
+    </div>
+    <div permission>
+        <div id='testDom' button-test='12'>这是有权限控制的指令按钮</div>
+    </div>
+
 </div>
 <search-require></search-require>

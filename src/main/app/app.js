@@ -4,9 +4,11 @@ import router from './router.js';
 import config from 'config';
 import './theme/css/style.css';
 import ucComponent from 'uc-component';
+import 'userdata_angular';
 export default window.$app = angular.module('app', [
     router.name,
-    oclazyload
+    oclazyload,
+    'userdata'
 ])  /*
      * 给http.xxx添加对应的customXxx方法。
      * 变更如下：
